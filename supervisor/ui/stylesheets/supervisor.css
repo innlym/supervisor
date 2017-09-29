@@ -14,10 +14,10 @@
 /* =MAIN
 ----------------------------------------------- */
 body, td, input, select, textarea, a {
-  font: 12px/1.5em arial, helvetica, verdana, sans-serif;
+  font: 14px/1.5em arial, helvetica, verdana, sans-serif;
   color: #333;
 }
-html, body, form, fieldset, h1, h2, h3, h4, h5, h6, 
+html, body, form, fieldset, h1, h2, h3, h4, h5, h6,
 p, pre, blockquote, ul, ol, dl, address {
   margin: 0;
   padding: 0;
@@ -38,7 +38,7 @@ body {
   background-color: #FFFFF3;
   color: #333;
 }
-a:link, 
+a:link,
 a:visited {
   color: #333;
 }
@@ -57,10 +57,10 @@ a:hover {
 }
 /* clear float */
 .clr:after {
-  content: "."; 
-  display: block; 
-  height: 0; 
-  clear: both; 
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
   visibility: hidden;
 }
 .clr {display: inline-block;}
@@ -78,10 +78,10 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  width: 782px;
+  width: 900px;
   margin: 0 auto -31px;
 }
-#footer, 
+#footer,
 .push {
   height: 30px;
 }
@@ -151,10 +151,11 @@ th {
   background-color: #919191;
   color: #fff;
   text-align: left;
+  padding: 4px;
 }
 th.state {
   text-align: center;
-  width: 44px;
+  width: 48px;
 }
 th.desc {
   width: 200px;
@@ -179,7 +180,7 @@ tr.shade td {
   display: inline;
 }
 .action li {
-  margin-right: 10px;
+  margin-right: 16px;
   display: inline;
 }
 
@@ -188,7 +189,7 @@ tr.shade td {
   display: block;
   width: 60px;
   height: 16px;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   text-align: center;
   font-size: 95%;
   line-height: 1.4em;
@@ -196,15 +197,15 @@ tr.shade td {
 .statusnominal {
   background-image: url("../images/state0.gif");
 }
-.statusrunning { 
+.statusrunning {
   background-image: url("../images/state2.gif");
 }
-.statuserror { 
+.statuserror {
   background-image: url("../images/state3.gif");
 }
 
 #footer {
-  width: 760px;
+  width: 900px;
   margin: 0 auto;
   padding: 0 10px;
   line-height: 30px;
