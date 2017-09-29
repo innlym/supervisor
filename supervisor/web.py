@@ -261,11 +261,16 @@ class StatusView(MeldView):
         }
         tailf = {
         'name':'Tail -f',
-        'href':'logtail/%s' % processname,
+        'href':'logtail/%s/stderr' % processname,
         'target':'_blank'
         }
+        signalhup = {
+        'name':'HUP',
+        'href':'index.html?processname=%s&amp;action=signalhup' % processname,
+        'target':None
+        }
         if state == ProcessStates.RUNNING:
-            actions = [restart, stop, clearlog, tailf]
+            actions = [restart, stop, clearlog, tailf, signalhup]
         elif state in (ProcessStates.STOPPED, ProcessStates.EXITED,
                        ProcessStates.FATAL):
             actions = [start, None, clearlog, tailf]
@@ -451,6 +456,36 @@ class StatusView(MeldView):
                         return 'Log for %s cleared' % namespec
                     clearlog.delay = 0.05
                     return clearlog
+
+                elif action == 'signalhup':
+                    try:
+                        results_or_callback = rpcinterface.supervisor.signalProcess(
+                                namespec, 'HUP')
+                    except RPCError as e:
+                        def signalerr():
+                            return 'unexpected rpc fault [%d] %s' % (
+                                e.code, e.text)
+                        signalerr.delay = 0.05
+                        return signalerr
+
+                    if callable(results_or_callback):
+                        def signalprocess():
+                            try:
+                                result = results_or_callback()
+                            except RPCError as e:
+                                return 'unexpected rpc fault [%d] %s' % (
+                                    e.code, e.text)
+                            if result is NOT_DONE_YET:
+                                return NOT_DONE_YET
+                            return 'Process %s signald' % namespec
+                        signalprocess.delay = 0.05
+                        return signalprocess
+                    else:
+                        def signaldone():
+                            return 'Process %s signald' % namespec
+                        signaldone.delay = 0.05
+                        return signaldone
+
 
         raise ValueError(action)
 
@@ -655,4 +690,3 @@ class supervisor_ui_handler:
         view = viewclass(context)
         pushproducer = request.channel.push_with_producer
         pushproducer(DeferredWebProducer(request, view))
-
